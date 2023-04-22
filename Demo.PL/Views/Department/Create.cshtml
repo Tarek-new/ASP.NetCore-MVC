@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Add New Department</h1>
+
+<hr/>
+<form asp-action="Create">
+    
+    <partial name="/Views/Department/Partial/CreatEditPartialView.cshtml" />
+    <input type="submit" class="btn btn-primary" />
+    <a asp-action="index" class="btn btn-light">Back To Departments List</a>
+
+</form>
+

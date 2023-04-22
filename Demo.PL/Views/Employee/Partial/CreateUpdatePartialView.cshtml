@@ -1,0 +1,69 @@
+﻿@model EmployeeViewModel
+@inject IDepartmentRepository depRepo
+@{
+
+    //var departments = new SelectList(depRepo.GetAll().Result, "Id", "Name");
+    var departments = new SelectList(ViewBag.departments, "Id", "Name");
+
+}
+
+<div class="form-group">
+    <label asp-for="@Model.Name" class="control-label"></label>
+    <input asp-for="@Model.Name" class="form-control" />
+    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="@Model.Address" class="control-label"></label>
+    <input asp-for="@Model.Address" class="form-control" />
+    <span asp-validation-for="@Model.Address" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="@Model.Age" class="control-label"></label>
+    <input asp-for="@Model.Age" class="form-control" />
+    <span asp-validation-for="@Model.Age" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="@Model.Salary" class="control-label"></label>
+    <input asp-for="@Model.Salary" class="form-control" />
+    <span asp-validation-for="@Model.Salary" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="@Model.Email" class="control-label"></label>
+    <input asp-for="@Model.Email" class="form-control" />
+    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+    <input asp-for="@Model.PhoneNumber" class="form-control" />
+    <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="@Model.HireDate" class="control-label"></label>
+    <input asp-for="@Model.HireDate" class="form-control" />
+    <span asp-validation-for="@Model.HireDate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="@Model.DepartmentId" class="control-label"></label>
+    <select asp-for="@Model.DepartmentId" class="form-control" asp-items="departments">
+        <option> Select Department </option>
+    </select>
+    <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="@Model.Image" class="control-label"></label>
+    <input type="file" asp-for="@Model.ImageURL" class="form-control" />
+</div>
+
+<div class="form-group mt-2">
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+        </label>
+    </div>
+</div>
+
+<input type="reset" class="btn btn-danger" />
+
+

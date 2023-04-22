@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+    // var departments = new SelectList(deptRepo.GetAll().Result, "Id", "Name");
+}
+
+<h1>Add New Employee</h1>
+<hr />
+<div class="row mb-3">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="Employee" enctype="multipart/form-data">
+            <partial name="~/Views/Employee/Partial/CreateUpdatePartialView.cshtml" />
+
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="index" class="btn btn-light">Back To Employees List</a>
+          </form> 
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    }

@@ -1,0 +1,29 @@
+﻿@model EmployeeViewModel
+@*@inject IDepartmentRepository depRepo*@
+@{
+    ViewData["Title"] = "Update";
+    //var departments = new SelectList(depRepo.GetAll().Result, "Id", "Name");
+
+}
+
+<h1>Update Employee</h1>
+<br/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update" asp-controller="Employee" enctype="multipart/form-data">
+            <input hidden asp-for="Id" />
+
+            <partial name="~/Views/Employee/Partial/CreateUpdatePartialView.cshtml" />
+          
+            <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-light">Back To Employees List</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    }

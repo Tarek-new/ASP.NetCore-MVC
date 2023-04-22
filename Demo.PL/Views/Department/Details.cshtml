@@ -1,0 +1,38 @@
+﻿@model DepartmentViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Department Details</h1>
+<br />
+<br />
+<table class="table table-responsive-xl table-striped table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(D=>D.Code)</th>
+            <th>@Html.DisplayNameFor(D=>D.Name)</th>
+            <th>Date Of Creation</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>@Model.Code</td>
+            <td>@Model.Name</td>
+            <td>@Model.DateOfCreation</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<div class="mt-2">
+
+    <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
+    <a asp-action="Index" class="btn btn-dark">Back To Departments List</a>
+</div>
+
+
+
