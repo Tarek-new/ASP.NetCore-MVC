@@ -1,6 +1,7 @@
 ﻿using Demo.DAL.Entities;
 using Demo.PL.Helper;
 using Demo.PL.Models.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -106,9 +107,7 @@ namespace Demo.PL.Controllers
         #endregion
 
 
-
-
-        #region Forgetpass
+        #region ForgetPassword
 
         public IActionResult ForgetPassword()
         {
@@ -116,19 +115,20 @@ namespace Demo.PL.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> ForgetPassword( ForgetPasswordViewModel model)
         {
             if(ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
 
-                if(user is not not null)
+                if(user is not null)
                 {
                     var token= await _userManager.GeneratePasswordResetTokenAsync(user);
                     var resetPasswordLink = Url.ActionLink("ResetPassword", "Account", 
                         new { Email = model.Email, Token = token },Request.Scheme);
 
-
+                    //Email Message Design
                     var email = new Email()
                     {
                         Title = "Reset Password",
@@ -139,28 +139,24 @@ namespace Demo.PL.Controllers
                     // To Do => SendEmail Method
 
                     EmailSettings.SendEmail(email);
-                    return RedirectToAction("Complete Forget Password");
+                    return RedirectToAction("CompletePasswordReset");
                 }
 
                 ModelState.AddModelError("", "email not found");
             }
 
-
-            return View();
+            return View(model);
         }
-
-
-
-
-
-
 
 
         #endregion
 
+        public IActionResult CompletePasswordReset()
+        {
+            return View();
+        }
 
-
-        #region Resetpass
+        #region ResetPassword
 
         public IActionResult ResetPassword( string email , string token)
         {
@@ -168,41 +164,32 @@ namespace Demo.PL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
 
-                if (user is not not null)
+                if (user is not null)
                 {
                     var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
 
                     if (result.Succeeded)
                     {
-                        RedirectToAction("Index", "Home");
+                        return RedirectToAction("ResetPasswordDone");
                     }
                     ModelState.AddModelError(string.Empty, "Invalid Password");
                 }
             }
 
 
-            return View();
+            return View(model);
         }
-
-
-
-
-
-
 
 
         #endregion
 
-
-
-
-
+   
         public IActionResult ResetPasswordDone()
         {
             return View();
