@@ -84,13 +84,17 @@ namespace Demo.PL.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid Email");
+                        ModelState.AddModelError(string.Empty, "Invalid Password");
                     }
                     
                 }
-                
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+
+                }
             }
-            return View(loginViewModel);
+            return View();
 
 
         }

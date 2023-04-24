@@ -54,13 +54,15 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    font-family: 'Handlee', cursive, sans-serif;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: 'Handlee', cursive, sans-serif;
 }
 .footer {
     position: absolute;
@@ -68,16 +70,15 @@ body {
     width: 100%;
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
-    
+    font-family: 'Handlee', cursive, sans-serif;
 }
 
 /* search box*/
 
 .s130 form {
     width: 100%;
-   
     padding-top: 4vh;
-    font-family: 'Alkatra', sans-serif;
+    font-family: 'Handlee', sans-serif;
 }
 
     .s130 form .inner-form {

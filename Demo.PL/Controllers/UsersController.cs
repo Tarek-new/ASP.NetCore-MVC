@@ -27,7 +27,17 @@ namespace Demo.PL.Controllers
             else
             {
                 var user= await _userManager.FindByEmailAsync(SearchValue);
-                return View(new List<ApplicationUser>() { user });
+                if(user==null)
+                {
+                    ModelState.AddModelError("", "Email Not Found");
+                    return View(new List<ApplicationUser>());
+
+                }
+                else
+                {
+                    return View(new List<ApplicationUser>() { user });
+
+                }
 
             }
 
@@ -50,8 +60,16 @@ namespace Demo.PL.Controllers
 
         public async Task<IActionResult> update(string id)
         {
-            
-            return View();
+
+
+            if (id is null)
+                return NotFound();
+
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+            return View(user);
 
         }
 
@@ -92,7 +110,41 @@ namespace Demo.PL.Controllers
         }
 
 
+        public async Task<IActionResult>Delete(string id)
+        {
+            if(id is null) return NotFound();
 
+
+
+            var user= await _userManager.FindByIdAsync(id);
+            if (user==null) return NotFound();
+            await _userManager.DeleteAsync(user);
+            return RedirectToAction("Index");
+
+            //    try
+            //    {
+            //        var user = await _userManager.FindByIdAsync(id);
+            //        var result=await _userManager.DeleteAsync(user);
+            //        if (result.Succeeded)
+            //        {
+            //            return RedirectToAction("Index");
+
+            //        }
+            //        else
+            //        {
+            //         foreach(var error in result.Errors)
+            //                ModelState.AddModelError("",error.Description);
+
+            //        }
+
+            //    }
+            //    catch (System.Exception)
+            //    {
+
+            //        throw;
+            //    }
+            //    return View();
+        }
 
     }
 }

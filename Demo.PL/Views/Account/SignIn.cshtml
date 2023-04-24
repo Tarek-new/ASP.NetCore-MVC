@@ -7,8 +7,9 @@
     <div class="form-inner">
         <h1 class="title">Login</h1>
         <p class="caption mb-4">Please enter your login details to sign in.</p>
-
+       
         <form asp-action="SignIn" class="pt-3">
+            @Html.ValidationSummary(false)
             <div class="form-floating">
                 <input type="email" asp-for="@Model.Email" class="form-control" id="email" placeholder="info@example.com">
                 <label for="email">Email Address</label>
