@@ -7,8 +7,10 @@ namespace Demo.PL.Helper
 {
     public class DocumentSettings
     {
-        public static string UploadFile(IFormFile file, string folderName)
+        public static string UploadFile(IFormFile file, string folderName, string oldFileName = null)
         {
+
+            if (file == null) return oldFileName;
             //1- Get Located Folder Path==> will be problem if there are images with same name
 
             var folderPath=Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",folderName);
@@ -24,7 +26,15 @@ namespace Demo.PL.Helper
 
             var fileStream = new FileStream(filePath, FileMode.Create);
             file.CopyTo(fileStream);
-
+            // If there's an oldFileName provided, delete the old file
+            if (!string.IsNullOrEmpty(oldFileName))
+            {
+                var oldFilePath = Path.Combine(folderPath, oldFileName);
+                if (File.Exists(oldFilePath))
+                {
+                    File.Delete(oldFilePath);
+                }
+            }
             return fileName;
         }
 

@@ -4,8 +4,10 @@ using Demo.DAL.Entities;
 using Demo.PL.Helper;
 using Demo.PL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Demo.PL.Controllers
@@ -53,7 +55,7 @@ namespace Demo.PL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(EmployeeViewModel employeeViewModel)
+        public async Task<IActionResult> Create(EmployeeViewModel employeeViewModel )
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +67,8 @@ namespace Demo.PL.Controllers
                 //    Age = employee.Age,
 
                 //};
-                employeeViewModel.ImageURL = DocumentSettings.UploadFile(employeeViewModel.Image, "Imgs");
+                
+               
                 var MappedEmployee=_mapper.Map<Employee>(employeeViewModel);
                 await _unitOfWork.EmployeeRepository.Add(MappedEmployee);
                 return RedirectToAction("Index");
@@ -105,31 +108,43 @@ namespace Demo.PL.Controllers
 
         }
         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Update(int? id, EmployeeViewModel employeeViewModel)
         {
+
             if (id != employeeViewModel.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    employeeViewModel.ImageURL = DocumentSettings.UploadFile(employeeViewModel.Image, "Imgs");
-                
-                    var mappedEmployee = _mapper.Map<Employee>(employeeViewModel);
+                    var existingEmployee = await _unitOfWork.EmployeeRepository.GetById(employeeViewModel.Id);
 
-                    await _unitOfWork.EmployeeRepository.Update(mappedEmployee);
+                    if (employeeViewModel.Image != null)
+                    {
+                        string oldFileName = existingEmployee.ImageURL != null ? 
+                            Path.GetFileName(new Uri(existingEmployee.ImageURL).AbsolutePath) : null;
+                        employeeViewModel.ImageURL = DocumentSettings.UploadFile(employeeViewModel.Image, "Imgs", oldFileName);
+                    }
+                    else
+                    {
+                        employeeViewModel.ImageURL = existingEmployee.ImageURL;
+                    }
+
+                    _mapper.Map(employeeViewModel, existingEmployee);
+
+                    await _unitOfWork.EmployeeRepository.Update(existingEmployee);
                     return RedirectToAction("Index");
+
                 }
                 catch (Exception e)
                 {
 
                     return View(employeeViewModel);
                 }
-
             }
 
             return View(employeeViewModel);
-
         }
 
 

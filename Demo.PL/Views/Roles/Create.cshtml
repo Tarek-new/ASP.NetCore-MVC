@@ -1,0 +1,27 @@
+﻿@model IdentityRole 
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Add New Role</h1>
+
+<hr />
+<form asp-action="Create">
+    @Html.ValidationSummary(false)
+    <div class="form-group">
+        <label asp-for="@Model.Name" class="col-form-label"></label>
+        <input asp-for="@Model.Name" class="form-control" />
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+    </div>
+
+    <input type="submit" class="btn btn-primary" />
+    <a asp-action="index" class="btn btn-light">Back To Roles List</a>
+
+</form>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial"/>
+
+}
+
