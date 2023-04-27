@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Demo.PL.Controllers
 {
+   
+    [Authorize(Roles = "Admin")]
+
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -51,9 +55,5 @@ namespace Demo.PL.Controllers
 
 
 
-        public IActionResult Details(string id)
-        {
-            return View();
-        }
     }
 }

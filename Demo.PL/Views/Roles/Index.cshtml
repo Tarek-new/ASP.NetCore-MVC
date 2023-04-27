@@ -15,10 +15,10 @@
     <table class="table table-responsive-xl table-striped table-hover">
         <thead>
             <tr>
+                <th> @Html.DisplayNameFor(R => R.Id) </th>
                 <th> @Html.DisplayNameFor(R => R.Name) </th>
-                <th>Details</th>
-                <th>Update</th>
-                <th>Delete</th>
+                <th colspan="2" style="text-align:center">Actions</th>
+
 
             </tr>
         </thead>
@@ -26,7 +26,9 @@
             @foreach (var role in Model)
             {
                 <tr>
+                    <td>@role.Id</td>
                     <td> @role.Name  </td>
+      
                     <partial name="_ButtonsPartialView" model="@role.Id.ToString()" />
                 </tr>
             }

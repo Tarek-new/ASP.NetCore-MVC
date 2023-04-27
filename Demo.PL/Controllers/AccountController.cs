@@ -38,8 +38,12 @@ namespace Demo.PL.Controllers
                     IsAgree = registerViewModel.IsAgree
                 };
                 var result= await _userManager.CreateAsync(user, registerViewModel.Password);
-                if(result.Succeeded)
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, Roles.User.ToString());//Default New User Role is "User"
                     return RedirectToAction("SignIn");
+                }
+                    
 
                 foreach(var error in result.Errors)
                 {

@@ -28,7 +28,8 @@ namespace Demo.PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            //services.AddControllersWithViews();
+            services.AddMvc();
             services.AddDbContext<MVCAppDbContext>(options=>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); 
@@ -46,18 +47,20 @@ namespace Demo.PL
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
                     options.LoginPath= new PathString("/Account/Login");
-                    options.AccessDeniedPath = new PathString("/Shard/Error");
+                    options.AccessDeniedPath = new PathString("/Shared/Error");
 
                 });
-
+         
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-                options.Password.RequireDigit = true;
+                options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 5;
+
                 options.SignIn.RequireConfirmedAccount = false;
+              
             })
 
              .AddEntityFrameworkStores<MVCAppDbContext>()
@@ -96,7 +99,13 @@ namespace Demo.PL
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
             });
+            //  app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapRazorPages();
+
+            //});
 
         }
     }

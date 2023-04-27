@@ -85,7 +85,7 @@ namespace Demo.PL.Controllers
 
             var department = await _unitOfWork.EmployeeRepository.GetDepartmentByEmployeeId(id);
             var mappedEmployee = _mapper.Map<EmployeeViewModel>(employee);
-            //var mappedDepartment = _mapper.Map<DepartmentViewModel>(department);
+            var mappedDepartment = _mapper.Map<DepartmentViewModel>(department);
 
             if (mappedEmployee == null) return NotFound();
 
@@ -107,7 +107,6 @@ namespace Demo.PL.Controllers
             return View(mappedEmployee);
 
         }
-        [HttpPost]
         [HttpPost]
         public async Task<IActionResult> Update(int? id, EmployeeViewModel employeeViewModel)
         {

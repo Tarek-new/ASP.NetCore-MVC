@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ApplicationUser>
+﻿@model IEnumerable<UserViewModel>
 @{
     ViewData["Title"] = "Index";
 }
@@ -34,24 +34,25 @@
             <tr>
                 <th> @Html.DisplayNameFor(U => U.UserName) </th>
                 <th> @Html.DisplayNameFor(U =>U.Email) </th>
-                <th> @Html.DisplayNameFor(U => U.IsAgree) </th>
-                <th> @Html.DisplayNameFor(U => U.PhoneNumber)</th>
-                <th>Details</th>
-                <th>Update</th>
-                <th>Delete</th>
+                <th>@Html.DisplayNameFor(U=>U.Roles)</th>
+              
+                <th colspan="3" style="text-align:center">Actions</th>
+
 
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var user in Model)
             {
                 <tr>
-                    <td> @item.UserName.ToString()  </td>
-                    <td> @item.Email  </td>
-                    <td> <input type="checkbox" disabled="disabled" @(item.IsAgree ? "checked='checked'" : "") /></td>
-                    <td> @item.PhoneNumber </td>
-              
-                    <partial name="_ButtonsPartialView" model="@item.Id.ToString()" />
+                    <td> @user.UserName.ToString()  </td>
+                    <td> @user.Email  </td>
+                    <td>@string.Join(",",user.Roles.ToList())</td>
+                    <td >
+                        <a class ="btn btn-secondary" asp-action="ManageRoles" asp-route-id="@user.Id"><i class="fa-solid fa-list-check"></i>Manage Roles</a>
+                    </td>
+                    <partial name="_ButtonsPartialView" model="@user.Id.ToString()" />
+
                 </tr>
             }
         </tbody>

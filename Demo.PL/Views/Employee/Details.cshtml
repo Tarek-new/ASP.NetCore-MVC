@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Employeer Details</h1>
+<h2 style="text-decoration:underline ; margin-top:3% ">Employeer Details</h2>
 
 <div class="mt-3">
 
@@ -23,7 +23,10 @@
         <dd class = "col-sm-10">@Model.Salary </dd>
 
         <dt class = "col-sm-2">IsActive</dt>
-        <dd class = "col-sm-10">@Model.IsActive </dd>
+        <dd class = "col-sm-10">
+
+            <input type="checkbox" disabled='disabled' @(Model.IsActive?"checked":"")/>
+        </dd>
 
         <dt class = "col-sm-2">Email</dt>
         <dd class = "col-sm-10">@Model.Email</dd>
@@ -32,7 +35,7 @@
         <dd class = "col-sm-10">@Model.PhoneNumber </dd>
 
         <dt class = "col-sm-2">HireDate</dt>
-        <dd class = "col-sm-10">@Model.HireDate</dd>
+        <dd class = "col-sm-10">@Model.HireDate.ToShortDateString()</dd>
 
         <dt class = "col-sm-2">Department </dt>
         <dd class = "col-sm-10">@Model.Department.Name</dd>
@@ -40,5 +43,5 @@
 </div>
 <div>
     <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
-    <a asp-action="Index" class="btn btn-dark">Back To Departments List</a>
+    <a asp-action="Index" class="btn btn-dark">Back To Employees List</a>
 </div>
