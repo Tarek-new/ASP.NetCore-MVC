@@ -10,66 +10,61 @@
 
 <a asp-action="Create" class="btn btn-primary mb-2"> Create New Employee</a>
 
-<div class="s130">
-    <form>
-        <div class="inner-form">
-            <div class="input-field first-wrap">
-                <div class="svg-wrapper">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                    </svg>
-                </div>
-                <input id="search" name="SearchValue" type="text" placeholder="Search By name" />
-            </div>
-            <div class="input-field second-wrap">
-                <button class="btn-search" type="submit">SEARCH</button>
-            </div>
-        </div>
 
-    </form>
-</div>
 
 @if (Model?.Count() > 0)
 {
-    <table class="table table-responsive-xl table-striped table-hover">
-        <thead>
-            <tr>
-                <th> @Html.DisplayNameFor(E => E.Name) </th>
-                <th> @Html.DisplayNameFor(E => E.Age) </th>
-                <th> @Html.DisplayNameFor(E => E.Salary)</th>
-                <th>Department </th>
-                <th>@Html.DisplayNameFor(E=>E.Image)</th>
-                <th colspan="3" style="text-align:center">Actions</th>
-              
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                var department = await EmpRepo.GetDepartmentByEmployeeId(item.Id);
+        <table class="table table-responsive-xl table-striped table-hover dataTable">
+            <thead>
                 <tr>
-                    <td> @item.Name  </td>
-                    <td> @item.Age</td>
-                    <td> @item.Salary </td>
-                    <td> @department.Name </td>
-                    <td>
-                        <img src="~/imgs/@item.ImageURL" class="img-circle" height="40" width="40" alt="No Image"/>
-                        </td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success ">
-                            <i class="fa fa-eye"></i>Details
-                        </a>
-                    </td>
-                    <partial name="_ButtonsPartialView" model="@item.Id.ToString()" />
+                    <th> @Html.DisplayNameFor(E => E.Name) </th>
+                    <th> @Html.DisplayNameFor(E => E.Age) </th>
+                    <th> @Html.DisplayNameFor(E => E.Salary)</th>
+                    <th>Department </th>
+                    <th>@Html.DisplayNameFor(E=>E.Image)</th>
+                 <th class ="text-hide"></th>
+                <th >Actions</th>
+                <th class="text-hide">Action</th>
+
+
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var department = await EmpRepo.GetDepartmentByEmployeeId(item.Id);
+                    <tr>
+                        <td> @item.Name  </td>
+                        <td> @item.Age</td>
+                        <td> @item.Salary </td>
+                        <td> @department.Name </td>
+                        <td>
+                            <img src="~/imgs/@item.ImageURL" class="img-circle" height="40" width="40" alt="No Image" />
+                        </td>
+                        <td>
+                            <div>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success ">
+                                <i class="fa fa-eye"></i>Details
+                            </a>
+                            </div>
+                        </td>
+                        <div> <partial name="_ButtonsPartialView" model="@item.Id.ToString()" /></div>
+                    </tr>
+                }
+            </tbody>
+        </table>
+  
 }
 else
 {
     <div class="alert alert-danger mt-5">
         <h3>No Employees Found</h3>
     </div>
+}
+
+@section Scripts{
+    <script>
+        $('.table').DataTable();
+    </script>
 }

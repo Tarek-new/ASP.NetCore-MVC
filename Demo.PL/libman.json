@@ -4,21 +4,18 @@
   "libraries": [
     {
       "library": "font-awesome@6.4.0",
-      "destination": "wwwroot/lib/font-awesome/",
-      "files": [
-        "css/all.min.css"
-      ]
+      "destination": "wwwroot/font-awesome/"
     },
     {
-      "provider": "cdnjs",
-      "library": "font-awesome@6.4.0",
-      "destination": "wwwroot/lib/font-awesome/"
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/lib/datatables/",
+      "files": [
+        "js/jquery.dataTables.min.js",
+        "js/dataTables.bootstrap4.js",
+        "js/dataTables.bootstrap4.min.js",
+        "css/dataTables.bootstrap4.css",
+        "css/dataTables.bootstrap4.min.css"
+      ]
     }
-  ,
-{
-  "provider": "cdnjs",
-  "library": "font-awesome@6.4.0",
-  "destination": "wwwroot/font-awesome/"
-}
-]
+  ]
 }
